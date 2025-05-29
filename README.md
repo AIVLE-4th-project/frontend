@@ -26,6 +26,7 @@
 
 ### 🗃️ 데이터베이스
 - H2 (개발용)
+- MySQL
 
 ### 🔗 API
 - RESTful API
