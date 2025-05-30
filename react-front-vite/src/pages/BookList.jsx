@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import { getBooks } from "../services/bookApi";
+import { useNavigate } from "react-router-dom";
 
 function BookList() {
   const [allBooks, setAllBooks] = useState([]); // 전체 목록 저장
   const [books, setBooks] = useState([]);       // 필터링된 목록
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
   useEffect(() => {
@@ -40,6 +42,14 @@ function BookList() {
           />
         ))}
       </div>
+        <div>
+            <button
+            onClick={() => navigate("/register")}
+            style={{ marginTop: "2rem", padding: "1rem", fontSize: "1rem" }}
+            >
+            ➕ 도서 등록
+        </button>
+        </div>
     </div>
   );
 }
