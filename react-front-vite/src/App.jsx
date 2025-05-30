@@ -12,8 +12,6 @@ import {getBooks} from "./services/bookApi";
 function App() {
   const [count, setCount] = useState(0)
 
-  console.log(getBooks());
-
   return (
   <BrowserRouter>
     <Routes>
