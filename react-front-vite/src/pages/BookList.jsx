@@ -25,7 +25,8 @@ function BookList() {
         const allBooks = await getBooks();
         const filteredBooks = allBooks.filter((book) =>
             book.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        )
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 최신순 정렬
         setAllBooks(filteredBooks);
 
         // 페이지 초기화
