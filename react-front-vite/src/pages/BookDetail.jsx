@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { dummyBooks } from "../dummyData";
 import { getBookDetail, deleteBook } from "../services/bookApi";
 
 function BookDetail() {

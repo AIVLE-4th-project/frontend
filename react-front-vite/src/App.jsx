@@ -6,8 +6,6 @@ import BookRegister from "./pages/BookRegister";
 import BookDetail from "./pages/BookDetail";
 import BookEdit from "./pages/BookEdit";
 
-import {getBooks} from "./services/bookApi";
-
 
 function App() {
   const [count, setCount] = useState(0)
