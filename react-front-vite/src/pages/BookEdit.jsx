@@ -23,7 +23,7 @@ function BookEdit() {
 
   const handleUpdate = () => {
     alert("수정 완료! (실제로는 업데이트 안됨)");
-    navigate(`/book/${id}`);
+    navigate(`/books/${id}`);
   };
 
   if (!book) return <p>책 정보를 찾을 수 없습니다.</p>;
