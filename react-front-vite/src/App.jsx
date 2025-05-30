@@ -13,7 +13,7 @@ function App() {
   return (
   <BrowserRouter>
     <Routes>
-      <Route path="/books" element={<BookList />} />
+      <Route path="/" element={<BookList />} />
       <Route path="/register" element={<BookRegister />} />
       <Route path="/books/:id" element={<BookDetail />} />
       <Route path="/edit/:id" element={<BookEdit />} /> 

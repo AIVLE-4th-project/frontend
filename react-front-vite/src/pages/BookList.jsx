@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import { dummyBooks } from "../dummyData"; // 이건 예시 데이터 (추후 axios 대체 가능)
+import { useNavigate } from "react-router-dom";
 
 function BookList() {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   // 도서 목록 불러오기 (searchTerm 기준)
   useEffect(() => {
@@ -34,6 +36,11 @@ function BookList() {
           />
         ))}
       </div>
+        <div>
+        <button type="button" onClick={() => navigate("/register")}>
+            ➕ 도서 등록
+        </button>
+        </div>
     </div>
   );
 }
