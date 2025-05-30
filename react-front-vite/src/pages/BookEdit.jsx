@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBookDetail, updateBook } from "../services/bookApi";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Fab } from '@mui/material';
 
 function BookEdit() {
   const { id } = useParams();
@@ -60,6 +62,19 @@ function BookEdit() {
         />
         <button onClick={handleUpdate}>✅ 수정 완료</button>
       </div>
+      <Fab
+        color="primary"
+        aria-label="back"
+        onClick={() => navigate("/")}
+        style={{
+          position: "fixed",
+          bottom: "2rem",
+          right: "2rem",
+          zIndex: 1000,
+        }}
+      >
+        <ArrowBackIcon />
+      </Fab>
     </div>
   );
 }
