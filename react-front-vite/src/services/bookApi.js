@@ -51,7 +51,7 @@ export const updateBook = async (book) => {
 // 도서 삭제
 export const deleteBook = async (id) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/books`, id); //body로 id를 넘겨줌
+    const response = await axios.delete(`${BASE_URL}/books`, { data: { id } }); //body로 id를 넘겨줌
     return response.data;
   } catch (error) {
     console.error(`도서 삭제 실패 (ID: ${id}):`, error);

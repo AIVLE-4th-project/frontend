@@ -37,7 +37,7 @@ function BookDetail() {
       <p><strong>등록일:</strong> {book.createdAt}</p>
 
       <div style={{ marginTop: "1rem" }}>
-        <button onClick={() => navigate(`/edit/${book.id}`)} style={{ marginRight: "1rem" }}>
+        <button onClick={() => navigate(`/edit/${id}`)} style={{ marginRight: "1rem" }}>
           ✏️ 수정
         </button>
         <button onClick={handleDelete}>🗑 삭제</button>
