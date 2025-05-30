@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { createBook } from "../services/bookApi";
 
 function BookRegister() {
   const navigate = useNavigate();
@@ -13,6 +14,14 @@ function BookRegister() {
       alert("모든 항목은 필수입니다!");
       return;
     }
+
+    const book = {
+      "title": title,
+      "author": author,
+      "content": content,
+      "cover_url": coverUrl
+    }
+    createBook(book)
 
     // 실제 등록 로직은 나중에 API 연동 시 구현
     alert("도서가 등록되었습니다!");
