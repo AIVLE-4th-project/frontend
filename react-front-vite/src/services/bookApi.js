@@ -1,34 +1,69 @@
-import axios from  'axios';
+import axios from 'axios';
 
 const BASE_URL = "http://172.30.1.21:8080"; // 백엔드 주소
 
 // 도서 등록
 export const createBook = async (book) => {
-  return axios.post(`${BASE_URL}/books`, book);
+  try {
+    const response = await axios.post(`${BASE_URL}/books`, book);
+    return response.data;
+  } catch (error) {
+    console.error("도서 등록 실패:", error);
+    return null;
+  }
 };
 
 // 도서 목록 전체 조회
 export const getBooks = async () => {
-  return axios.get(`${BASE_URL}/books`);
+  try {
+    const response = await axios.get(`${BASE_URL}/books`);
+    return response.data;
+  } catch (error) {
+    console.error("도서 목록 조회 실패:", error);
+    return []; // 기본값으로 빈 배열 반환
+  }
 };
 
-// 도서 목록 상세 조회
+// 도서 상세 조회
 export const getBookDetail = async (id) => {
-  return axios.get(`${BASE_URL}/books-detail/${id}`);
+  try {
+    const response = await axios.get(`${BASE_URL}/books-detail/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`도서 상세 조회 실패 (ID: ${id}):`, error);
+    return null;
+  }
 };
 
 // 도서 수정
 export const updateBook = async (id, book) => {
-  return axios.put(`${BASE_URL}/books/${id}`, book);
+  try {
+    const response = await axios.put(`${BASE_URL}/books/${id}`, book);
+    return response.data;
+  } catch (error) {
+    console.error(`도서 수정 실패 (ID: ${id}):`, error);
+    return null;
+  }
 };
 
 // 도서 삭제
 export const deleteBook = async (id) => {
-  return axios.delete(`${BASE_URL}/books/${id}`);
+  try {
+    const response = await axios.delete(`${BASE_URL}/books/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`도서 삭제 실패 (ID: ${id}):`, error);
+    return null;
+  }
 };
 
 // 표시 이미지 URL 업데이트
 export const updateImageUrl = async (bookId, imageUrl) => {
-  return axios.post(`${BASE_URL}/books/${bookId}/image`, { imageUrl });
+  try {
+    const response = await axios.post(`${BASE_URL}/books/${bookId}/image`, { imageUrl });
+    return response.data;
+  } catch (error) {
+    console.error(`이미지 URL 업데이트 실패 (Book ID: ${bookId}):`, error);
+    return null;
+  }
 };
-
