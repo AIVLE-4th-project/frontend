@@ -5,7 +5,7 @@ function BookCard({ id, title, coverUrl, date }) {
 
   return (
     <div
-      onClick={() => navigate(`/book/${id}`)}
+      onClick={() => navigate(`/books/${id}`)}
       style={{
         border: "1px solid #ccc",
         padding: "1rem",
