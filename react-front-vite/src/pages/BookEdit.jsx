@@ -15,14 +15,17 @@ function BookEdit() {
   const [content, setContent] = useState("");
 
   const [touched, setTouched] = useState(false);
+    const [loading, setLoading] = useState(true); // ✅ loading 상태 추가
 
   useEffect(() => {
     const fetchBookDetail = async () => {
+      setLoading(true);  // 로딩 시작
       const data = await getBookDetail(id);
       setBook(data)
       setTitle(data.title)
       setAuthor(data.author)
       setContent(data.content)
+      setLoading(false);  //로딩 완료
     };
     fetchBookDetail()
   }, [id]);
@@ -39,6 +42,7 @@ function BookEdit() {
     navigate(`/books/${id}`);
   };
 
+  if (loading) return <p>🔄 로딩 중...</p>;
   if (!book) return <p>책 정보를 찾을 수 없습니다.</p>;
 
   return (
