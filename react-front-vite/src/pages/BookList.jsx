@@ -5,6 +5,11 @@ import { getBooks } from "../services/bookApi";
 import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 
 function BookList() {
     const [allBooks, setAllBooks] = useState([]); // 전체 목록 저장
@@ -42,10 +47,30 @@ function BookList() {
 
     return (
         <div style={{ padding: "2rem" }}>
-        <h2>📚 도서 목록</h2>
+            <Box sx={{ textAlign: "center", mt: 4, mb: 4 }}>
+            <Typography
+                variant="h4"
+                component="h1"
+                sx={{
+                fontWeight: "bold",
+                display: "inline-block",
+                padding: "0.5rem 1.5rem",
+                borderRadius: "1rem",
+                background: "linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)",
+                color: "white",
+                boxShadow: 3,
+                }}
+            >
+                도서 목록
+            </Typography>
+            <Divider sx={{ mt: 2 }} />
+            </Box>
 
-        {/* 검색창 */}
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+            {/* 검색창 */}
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            </div>
 
         {/* 도서 카드 리스트 */}
         <div
@@ -67,12 +92,19 @@ function BookList() {
             ))}
         </div>
             <div>
-                <button
+                <Fab
+                color="primary"
+                aria-label="add"
                 onClick={() => navigate("/register")}
-                style={{ marginTop: "2rem", padding: "1rem", fontSize: "1rem" }}
+                style={{
+                    position: "fixed",
+                    bottom: "2rem",
+                    right: "2rem",
+                    zIndex: 1000,
+                }}
                 >
-                ➕ 도서 등록
-                </button>
+                <AddIcon />
+                </Fab>
             </div>
 
             {/* 페이지네이션 */}
