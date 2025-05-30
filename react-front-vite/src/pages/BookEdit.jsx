@@ -90,7 +90,7 @@ function BookEdit() {
             <Fab
             color="primary"
             aria-label="back"
-            onClick={() => navigate("/")}
+            onClick={() => navigate(-1)}
             style={{
                 position: "fixed",
                 bottom: "2rem",
