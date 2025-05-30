@@ -1,3 +1,8 @@
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { createBook } from "../services/bookApi";
@@ -8,6 +13,7 @@ function BookRegister() {
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
   const [coverUrl, setCoverUrl] = useState("");
+  const [touched, setTouched] = useState(false);
 
   const handleRegister = () => {
     if (!title || !author || !content) {
@@ -29,37 +35,66 @@ function BookRegister() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>➕ 도서 등록</h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "300px" }}>
-        <input
-          type="text"
-          placeholder="책 제목"
+    <Box sx={{ padding: "2rem", maxWidth: 500, margin: "auto" }}>
+      <Stack spacing={3} alignItems="center" mb={3}>
+        <Typography
+          variant="h5"
+          component="h1"
+          sx={{
+            fontWeight: "bold",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            color: "#1e1e1e",
+          }}
+        >
+          <span style={{ color: "#7b1fa2", fontSize: "1.6rem" }}>➕</span>
+          도서 등록
+        </Typography>
+      </Stack>
+
+      <Stack spacing={2}>
+        <TextField
+          label="책 제목"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
+          error={!title && touched}
+          helperText={!title && touched ? "제목은 필수 입력 항목입니다." : ""}
+          fullWidth
         />
-        <input
-          type="text"
-          placeholder="저자"
+        <TextField
+          label="저자"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
+          required
+          error={!author && touched}
+          helperText={!author && touched ? "저자는 필수 입력 항목입니다." : ""}
+          fullWidth
         />
-        <textarea
-          placeholder="내용"
+        <TextField
+          label="내용"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          rows={5}
-        />
-        <input
-          type="text"
-          placeholder="커버 이미지 URL (선택)"
-          value={coverUrl}
-          onChange={(e) => setCoverUrl(e.target.value)}
+          required
+          multiline
+          rows={4}
+          error={!content && touched}
+          helperText={!content && touched ? "내용은 필수 입력 항목입니다." : ""}
+          fullWidth
         />
 
-        <button onClick={handleRegister}>✅ 도서 등록</button>
-      </div>
-    </div>
+        {/* 버튼 정렬 개선 */}
+        <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
+          <Button variant="contained" color="primary" onClick={handleRegister}>
+            도서 등록
+          </Button>
+          <Button variant="outlined" color="secondary" onClick={() => navigate(-1)}>
+            뒤로가기
+          </Button>
+        </Stack>
+      </Stack>
+    </Box>
   );
 }
 
