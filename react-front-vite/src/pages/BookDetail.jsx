@@ -40,6 +40,9 @@ function BookDetail() {
         <p><strong>등록일:</strong> {book.createdAt?.slice(2, 10)}</p>
 
         <div style={{ marginTop: "1rem" }}>
+            <button onClick={() => navigate("/")} style={{ marginRight: "1rem" }}>
+              🔙 뒤로
+            </button>
             <button onClick={() => navigate(`/edit/${id}`)} style={{ marginRight: "1rem" }}>
             ✏️ 수정
             </button>
