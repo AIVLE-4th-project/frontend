@@ -30,7 +30,7 @@ function BookEdit() {
       "content": content
     }
     updateBook(book)
-    alert("수정 완료! (실제로는 업데이트 안됨)");
+    alert("수정 완료!");
     navigate(`/books/${id}`);
   };
 
