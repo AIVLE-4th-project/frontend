@@ -13,10 +13,10 @@ function App() {
   return (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<BookList />} />
+      <Route path="/books" element={<BookList />} />
       <Route path="/register" element={<BookRegister />} />
-      <Route path="/book/:id" element={<BookDetail />} />
-      <Route path="/edit/:id" element={<BookEdit />} />
+      <Route path="/books/:id" element={<BookDetail />} />
+      <Route path="/edit/:id" element={<BookEdit />} /> 
     </Routes>
   </BrowserRouter>
   )
