@@ -38,9 +38,9 @@ export const getBookDetail = async (id) => {
 };
 
 // 도서 수정
-export const updateBook = async (id, book) => {
+export const updateBook = async (book) => {
   try {
-    const response = await axios.put(`${BASE_URL}/books/${id}`, book);
+    const response = await axios.put(`${BASE_URL}/books`, book); //body로 id포함 정보를 넘겨줌줌
     return response.data;
   } catch (error) {
     console.error(`도서 수정 실패 (ID: ${id}):`, error);
@@ -51,7 +51,7 @@ export const updateBook = async (id, book) => {
 // 도서 삭제
 export const deleteBook = async (id) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/books/${id}`);
+    const response = await axios.delete(`${BASE_URL}/books/`, id); //body로 id를 넘겨줌
     return response.data;
   } catch (error) {
     console.error(`도서 삭제 실패 (ID: ${id}):`, error);
