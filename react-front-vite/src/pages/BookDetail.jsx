@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { dummyBooks } from "../dummyData";
+import { getBooks } from "../services/bookApi";
 
 function BookDetail() {
   const { id } = useParams();

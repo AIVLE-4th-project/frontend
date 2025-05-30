@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
-import { dummyBooks } from "../dummyData"; // 이건 예시 데이터 (추후 axios 대체 가능)
-import { useNavigate } from "react-router-dom";
+import { getBooks } from "../services/bookApi";
 
 function BookList() {
-  const [books, setBooks] = useState([]);
+  const [allBooks, setAllBooks] = useState([]); // 전체 목록 저장
+  const [books, setBooks] = useState([]);       // 필터링된 목록
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
 
-  // 도서 목록 불러오기 (searchTerm 기준)
-  useEffect(() => {
-    const filteredBooks = dummyBooks.filter((book) =>
+  // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
+useEffect(() => {
+  const fetchBooks = async () => {
+    const allBooks = await getBooks();
+    const filteredBooks = allBooks.filter((book) =>
       book.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setBooks(filteredBooks);
-  }, [searchTerm]);
+  };
+
+  fetchBooks();
+}, [searchTerm]);
 
   return (
     <div style={{ padding: "2rem" }}>
@@ -36,11 +40,6 @@ function BookList() {
           />
         ))}
       </div>
-        <div>
-        <button type="button" onClick={() => navigate("/register")}>
-            ➕ 도서 등록
-        </button>
-        </div>
     </div>
   );
 }
@@ -109,4 +108,3 @@ export default BookList;
 // }
 
 //export default BookList;
-
