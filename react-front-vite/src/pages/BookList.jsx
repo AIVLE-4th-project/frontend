@@ -1,3 +1,46 @@
+import { useEffect, useState } from "react";
+import BookCard from "../components/BookCard";
+import SearchBar from "../components/SearchBar";
+import { dummyBooks } from "../dummyData"; // 이건 예시 데이터 (추후 axios 대체 가능)
+
+function BookList() {
+  const [books, setBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // 도서 목록 불러오기 (searchTerm 기준)
+  useEffect(() => {
+    const filteredBooks = dummyBooks.filter((book) =>
+      book.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setBooks(filteredBooks);
+  }, [searchTerm]);
+
+  return (
+    <div style={{ padding: "2rem" }}>
+      <h2>📚 도서 목록</h2>
+
+      {/* 검색창 */}
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      {/* 도서 카드 리스트 */}
+      <div style={{ marginTop: "1rem" }}>
+        {books.map((book) => (
+          <BookCard
+            key={book.id}
+            id={book.id}
+            title={book.title}
+            coverUrl={book.coverUrl}
+            date={book.createdAt}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default BookList;
+
+
 // import BookCard from "../components/BookCard";
 // import { useNavigate } from "react-router-dom";
 
@@ -28,34 +71,35 @@
 // }
 
 
-function BookList() {
-  return (
-    <div style={{ padding: '2rem' }}>
-      <h2>📚 도서 목록</h2>
+// function BookList() {
+//   return (
+//     <div style={{ padding: '2rem' }}>
+//       <h2>📚 도서 목록</h2>
       
-      {/* 검색창 자리 */}
-      <div style={{ marginBottom: '1rem' }}>
-        <input
-          type="text"
-          placeholder="도서명을 입력해주세요"
-          style={{ padding: '0.5rem', width: '250px' }}
-        />
-        <button style={{ marginLeft: '0.5rem', padding: '0.5rem 1rem' }}>
-          검색
-        </button>
-      </div>
+//       {/* 검색창 자리 */}
+//       <div style={{ marginBottom: '1rem' }}>
+//         <input
+//           type="text"
+//           placeholder="도서명을 입력해주세요"
+//           style={{ padding: '0.5rem', width: '250px' }}
+//         />
+//         <button style={{ marginLeft: '0.5rem', padding: '0.5rem 1rem' }}>
+//           검색
+//         </button>
+//       </div>
 
-      {/* 도서 리스트 자리 */}
-      <div>
-        {/* BookCard가 여기 반복 출력될 예정 */}
-      </div>
+//       {/* 도서 리스트 자리 */}
+//       <div>
+//         {/* BookCard가 여기 반복 출력될 예정 */}
+//       </div>
 
-      {/* 등록 버튼 */}
-      <div style={{ marginTop: '2rem' }}>
-        <button style={{ padding: '0.8rem 1.2rem' }}>➕ 도서 등록</button>
-      </div>
-    </div>
-  );
-}
+//       {/* 등록 버튼 */}
+//       <div style={{ marginTop: '2rem' }}>
+//         <button style={{ padding: '0.8rem 1.2rem' }}>➕ 도서 등록</button>
+//       </div>
+//     </div>
+//   );
+// }
 
-export default BookList;
+//export default BookList;
+
