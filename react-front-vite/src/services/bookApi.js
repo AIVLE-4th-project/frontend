@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = "http://172.30.1.21:8080"; // 백엔드 주소
+const BASE_URL = "http://172.30.1.21:8081"; // 백엔드 주소
 
 // 도서 등록
 export const createBook = async (book) => {
