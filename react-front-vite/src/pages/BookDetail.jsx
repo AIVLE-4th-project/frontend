@@ -48,11 +48,10 @@ function BookDetail() {
             </button>
             <button onClick={handleDelete}>🗑 삭제</button>
         </div>
-        {/* ✅ 오른쪽 아래 뒤로가기 버튼 */}
         <Fab
           color="primary"
           aria-label="back"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           style={{
             position: "fixed",
             bottom: "2rem",
