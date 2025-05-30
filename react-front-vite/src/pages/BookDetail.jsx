@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { dummyBooks } from "../dummyData";
-import { getBooks } from "../services/bookApi";
+import { getBookDetail, deleteBook } from "../services/bookApi";
 
 function BookDetail() {
   const { id } = useParams();
@@ -9,13 +9,18 @@ function BookDetail() {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    const found = dummyBooks.find((b) => b.id === Number(id));
-    setBook(found);
+    const fetchBookDetail = async () => {
+      const data = await getBookDetail(id);
+      setBook(data);
+    };
+    
+    fetchBookDetail();
   }, [id]);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      alert("삭제되었습니다. (더미라 실제 삭제는 안 돼요)");
+      await deleteBook(id);
+      alert("삭제되었습니다.");
       navigate("/");
     }
   };
