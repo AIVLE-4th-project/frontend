@@ -1,6 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBookDetail, deleteBook } from "../services/bookApi";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Fab } from '@mui/material';
+
 
 function BookDetail() {
     const { id } = useParams();
@@ -44,11 +47,23 @@ function BookDetail() {
             ✏️ 수정
             </button>
             <button onClick={handleDelete}>🗑 삭제</button>
-            <button onClick={() => navigate("/")} style={{ marginRight: "1rem" }}>
-            🔙 뒤로
-            </button>
         </div>
-        </div>
+        {/* ✅ 오른쪽 아래 뒤로가기 버튼 */}
+        <Fab
+          color="primary"
+          aria-label="back"
+          onClick={() => navigate(-1)}
+          style={{
+            position: "fixed",
+            bottom: "2rem",
+            right: "2rem",
+            zIndex: 1000,
+          }}
+        >
+          <ArrowBackIcon />
+        </Fab>
+
+      </div>
     );
 }
 
