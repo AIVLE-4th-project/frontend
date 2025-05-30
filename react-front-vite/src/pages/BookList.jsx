@@ -62,7 +62,7 @@ function BookList() {
                 boxShadow: 3,
                 }}
             >
-                도서 목록
+                작가의 산책
             </Typography>
             <Divider sx={{ mt: 2 }} />
             </Box>
