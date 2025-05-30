@@ -27,7 +27,7 @@ export const getBooks = async () => {
 // 도서 상세 조회
 export const getBookDetail = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/books-detail/${id}`);
+    const response = await axios.get(`${BASE_URL}/books-detail`, id);
     return response.data;
   } catch (error) {
     console.error(`도서 상세 조회 실패 (ID: ${id}):`, error);
