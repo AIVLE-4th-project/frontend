@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { dummyBooks } from "../dummyData";
+import { getBookDetail } from "../services/bookApi";
 
 function BookEdit() {
   const { id } = useParams();
@@ -12,13 +13,14 @@ function BookEdit() {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    const found = dummyBooks.find((b) => b.id === Number(id));
-    if (found) {
-      setBook(found);
-      setTitle(found.title);
-      setAuthor(found.author);
-      setContent(found.content);
-    }
+    const fetchBookDetail = async () => {
+      const data = await getBookDetail(id);
+      setBook(data)
+      setTitle(data.title)
+      setAuthor(data.author)
+      setContent(data.content)
+    };
+    fetchBookDetail()
   }, [id]);
 
   const handleUpdate = () => {
