@@ -38,7 +38,7 @@ function BookDetail() {
         <h3>{book.title}</h3>
         <p><strong>저자:</strong> {book.author}</p>
         <p><strong>내용:</strong> {book.content}</p>
-        <p><strong>등록일:</strong> {book.createdAt}</p>
+        <p><strong>등록일:</strong> {book.createdAt?.slice(2, 10)}</p>
 
         <div style={{ marginTop: "1rem" }}>
             <button onClick={() => navigate(`/edit/${id}`)} style={{ marginRight: "1rem" }}>
