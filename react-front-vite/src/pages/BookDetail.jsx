@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBookDetail, deleteBook } from "../services/bookApi";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Typography, Button, Grid, Stack, Paper } from "@mui/material";
 import { Fab } from '@mui/material';
 
 
@@ -34,36 +35,96 @@ function BookDetail() {
     if (!book) return <p>📦 도서를 찾을 수 없습니다.</p>;
 
     return (
-        <div style={{ padding: "2rem" }}>
-        <h2>📖 도서 상세</h2>
-        <img src={book.coverUrl} alt="표지 이미지" width="120" />
-        <h3>{book.title}</h3>
-        <p><strong>저자:</strong> {book.author}</p>
-        <p><strong>내용:</strong> {book.content}</p>
-        <p><strong>등록일:</strong> {book.createdAt?.slice(2, 10)}</p>
+    <Box sx={{ padding: "2rem" }}>
+      <Typography variant="h5" gutterBottom>
+        📖 도서 상세
+      </Typography>
 
-        <div style={{ marginTop: "1rem" }}>
-            <button onClick={() => navigate(`/edit/${id}`)} style={{ marginRight: "1rem" }}>
-            ✏️ 수정
-            </button>
-            <button onClick={handleDelete}>🗑 삭제</button>
-        </div>
-        <Fab
+      <Grid container spacing={4} alignItems="flex-start" direction={{ xs: "column", md: "row" }}>
+        {/* 텍스트 영역 */}
+            <Grid item xs={12} md={6}>
+                <Paper elevation={3} sx={{ 
+                p: 2, 
+                width: 300, 
+                height: 400, 
+                display: "flex", 
+                flexDirection: "column", 
+                justifyContent: "space-between" 
+                }}>
+                <Typography variant="h6">{book.title}</Typography>
+                <Typography variant="subtitle2"><strong>저자:</strong> {book.author}</Typography>
+                <Typography variant="subtitle2"><strong>책내용:</strong> </Typography>                
+                <Typography variant="body2" sx={{
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: 1,
+                    p: 1,
+                    mt: 1,
+                    overflowY: "auto",
+                    maxHeight: 200
+                }}>
+                    {book.content}
+                </Typography>
+                <Typography variant="caption" sx={{ mt: "auto" }}>
+                    <strong>등록일:</strong> {book.createdAt?.slice(0, 10)}
+                </Typography>
+                </Paper>
+            </Grid>
+
+        {/* 이미지 영역 */}
+        <Grid item xs={12} md={6}>
+            <Box sx={{ width: 300, height: 400, display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <img
+                src={book.coverUrl}
+                alt="표지 이미지"
+                style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "cover",
+                borderRadius: "8px",
+                aspectRatio: "3 / 4"
+                }}
+            />
+            </Box>
+        </Grid>
+      </Grid>
+
+      {/* 좌측 하단 고정 버튼 */}
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          position: "absolute",
+          bottom: 32,
+          left: 32,
+        }}
+      >
+        <Button
+          variant="contained"
           color="primary"
-          aria-label="back"
-          onClick={() => navigate("/")}
-          style={{
-            position: "fixed",
-            bottom: "2rem",
-            right: "2rem",
-            zIndex: 1000,
-          }}
+          onClick={() => navigate(`/edit/${id}`)}
         >
-          <ArrowBackIcon />
-        </Fab>
-
-      </div>
-    );
+          ✏️ 수정
+        </Button>
+        <Button variant="outlined" color="error" onClick={handleDelete}>
+          🗑 삭제
+        </Button>
+            <Fab
+            color="primary"
+            aria-label="back"
+            onClick={() => navigate(-1)}
+            style={{
+                position: "fixed",
+                bottom: "2rem",
+                right: "2rem",
+                zIndex: 1000,
+            }}
+            >
+            <ArrowBackIcon />
+            </Fab>
+      </Stack>
+    </Box>
+  );
 }
+
 
 export default BookDetail;
