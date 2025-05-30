@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { dummyBooks } from "../dummyData";
-import { getBookDetail } from "../services/bookApi";
+import { getBookDetail, updateBook } from "../services/bookApi";
 
 function BookEdit() {
   const { id } = useParams();
@@ -24,6 +23,13 @@ function BookEdit() {
   }, [id]);
 
   const handleUpdate = () => {
+    const book = {
+      "id": id,
+      "title": title,
+      "author": author,
+      "content": content
+    }
+    updateBook(book)
     alert("수정 완료! (실제로는 업데이트 안됨)");
     navigate(`/books/${id}`);
   };
