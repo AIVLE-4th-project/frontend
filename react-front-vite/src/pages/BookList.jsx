@@ -9,17 +9,17 @@ function BookList() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
-useEffect(() => {
-  const fetchBooks = async () => {
-    const allBooks = await getBooks();
-    const filteredBooks = allBooks.filter((book) =>
-      book.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setBooks(filteredBooks);
-  };
+  useEffect(() => {
+    const fetchBooks = async () => {
+      const allBooks = await getBooks();
+      const filteredBooks = allBooks.filter((book) =>
+        book.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setBooks(filteredBooks);
+    };
 
-  fetchBooks();
-}, [searchTerm]);
+    fetchBooks();
+  }, [searchTerm]);
 
   return (
     <div style={{ padding: "2rem" }}>
