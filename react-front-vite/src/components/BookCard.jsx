@@ -16,6 +16,8 @@ function BookCard({ id, title, coverUrl, date }) {
         display: "flex",
         alignItems: "center",
         gap: "1rem",
+        overflow: "hidden",
+        width: "250px",
       }}
     >
       <img src={coverUrl} alt={`${title} 표지`} width="80" height="120" />
