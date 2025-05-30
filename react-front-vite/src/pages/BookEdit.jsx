@@ -1,8 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBookDetail, updateBook } from "../services/bookApi";
+import { Box, TextField, Button, Typography, Stack, Paper } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Fab } from '@mui/material';
+import Fab from "@mui/material/Fab";
 
 function BookEdit() {
   const { id } = useParams();
@@ -12,6 +13,8 @@ function BookEdit() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
+
+  const [touched, setTouched] = useState(false);
 
   useEffect(() => {
     const fetchBookDetail = async () => {
@@ -39,44 +42,66 @@ function BookEdit() {
   if (!book) return <p>책 정보를 찾을 수 없습니다.</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>✏️ 도서 수정</h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "300px" }}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="책 제목"
-        />
-        <input
-          type="text"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          placeholder="저자"
-        />
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="내용"
-          rows={5}
-        />
-        <button onClick={handleUpdate}>✅ 수정 완료</button>
-      </div>
-      <Fab
-        color="primary"
-        aria-label="back"
-        onClick={() => navigate("/")}
-        style={{
-          position: "fixed",
-          bottom: "2rem",
-          right: "2rem",
-          zIndex: 1000,
-        }}
-      >
-        <ArrowBackIcon />
-      </Fab>
-    </div>
+     <Box sx={{ padding: "2rem", maxWidth: 500, margin: "auto" }}>
+      <Typography variant="h5" gutterBottom>✏️ 도서 수정</Typography>
+
+      <Paper sx={{ padding: 3 }}>
+        <Stack spacing={2}>
+          <TextField
+            label="책 제목"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            error={!title && touched}
+            helperText={!title && touched ? "제목은 필수입니다." : ""}
+          />
+          <TextField
+            label="저자"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            required
+            error={!author && touched}
+            helperText={!author && touched ? "저자는 필수입니다." : ""}
+          />
+          <TextField
+            label="내용"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+            multiline
+            rows={4}
+            error={!content && touched}
+            helperText={!content && touched ? "내용은 필수입니다." : ""}
+          />
+            <TextField
+            label="등록일"
+            value={book.createdAt?.slice(0, 10)}
+            disabled
+            />
+
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" onClick={handleUpdate}>
+              ✅ 수정 완료
+            </Button>
+            <Fab
+            color="primary"
+            aria-label="back"
+            onClick={() => navigate(-1)}
+            style={{
+                position: "fixed",
+                bottom: "2rem",
+                right: "2rem",
+                zIndex: 1000,
+            }}
+            >
+            <ArrowBackIcon />
+            </Fab>
+          </Stack>
+        </Stack>
+      </Paper>
+    </Box>
   );
 }
+
 
 export default BookEdit;
