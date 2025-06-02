@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 function BookList() {
     const [allBooks, setAllBooks] = useState([]); // 전체 목록 저장
@@ -22,16 +23,25 @@ function BookList() {
     const itemsPerPage = 6; // 현재 페이지에 표시되는 카드 수 6개
     const [topBooks, setTopBooks] = useState([]); // top5 저장장
     const [sortBy, setSortBy] = useState("latest"); // "latest" or "popular"
+    const [searchMode, setSearchMode] = useState("title");
 
     // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
     useEffect(() => {
+        console.log("🔍 검색 기준:", searchMode);
         const fetchBooks = async () => {
             const allBooks = await getBooks();
 
             // 최신순 정렬
-            const filteredBooks = allBooks.filter((book) =>
-                book.title.toLowerCase().includes(searchTerm.toLowerCase())
-            )
+            const filteredBooks = allBooks
+            .filter((book) => {
+                const term = searchTerm.toLowerCase();
+                if (searchMode === "title") {
+                return book.title?.toLowerCase().includes(term);
+                } else if (searchMode === "author") {
+                return book.author?.toLowerCase().includes(term);  // ✅ null 체크
+                }
+                return true;
+            })
             .sort((a, b) => {
                     if (sortBy === "latest") {
                     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -53,7 +63,7 @@ function BookList() {
         };
 
         fetchBooks();
-    }, [searchTerm, sortBy]);
+    }, [searchTerm, sortBy, searchMode]);
 
     // 현재 페이지 도서 추출
     const pagedBooks = allBooks.slice(
@@ -113,6 +123,7 @@ function BookList() {
                     key={book.id}
                     id={book.id}
                     title={`${index + 1}. ${book.title}`}
+                    author={book.author}
                     coverUrl={book.coverUrl}
                     date={book.createdAt}
                     views={book.views}
@@ -123,7 +134,7 @@ function BookList() {
             </Box>
 
             {/* 검색창 */}
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2, gap: 1 }}>
                 <Stack direction="row" spacing={1}>
                     <Button
                         variant={sortBy === "latest" ? "contained" : "outlined"}
@@ -138,7 +149,23 @@ function BookList() {
                     인기순
                     </Button>
                 </Stack>
+
+                <Box sx={{ display: "flex", gap: 1 }}>
+                <FormControl size="small">
+                    <InputLabel id="search-mode-label">기준</InputLabel>
+                    <Select
+                    labelId="search-mode-label"
+                    value={searchMode}
+                    label="기준"
+                    onChange={(e) => setSearchMode(e.target.value)}
+                    >
+                    <MenuItem value="title">제목</MenuItem>
+                    <MenuItem value="author">저자</MenuItem>
+                    </Select>
+                </FormControl>
+
                 <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                </Box>
             </Box>
 
         {/* 도서 카드 리스트 */}
@@ -155,6 +182,7 @@ function BookList() {
                 key={book.id}
                 id={book.id}
                 title={book.title}
+                author={book.author}
                 coverUrl={book.coverUrl}
                 date={book.createdAt}
                 views={book.views}

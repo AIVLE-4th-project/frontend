@@ -13,7 +13,7 @@ function SearchBar({ searchTerm, setSearchTerm }) {
   return (
     <form onSubmit={handleSubmit} style={{ display: "flex", gap: "1rem" }}>
       <TextField
-        label="도서명을 입력하세요"
+        label="도서/저자명을 입력하세요"
         variant="outlined"
         size="small"
         value={searchTerm}
