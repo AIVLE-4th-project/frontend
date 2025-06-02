@@ -27,7 +27,6 @@ function BookList() {
 
     // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
     useEffect(() => {
-        console.log("🔍 검색 기준:", searchMode);
         const fetchBooks = async () => {
             const allBooks = await getBooks();
 
@@ -105,7 +104,6 @@ function BookList() {
             <Divider sx={{ mt: 2 }} />
             </Box>
 
-            {/* 조회수 Top5 */}
             <Box sx={{ mt: 4, mb: 4 }}>
             <Typography variant="h5" fontWeight="bold" gutterBottom>
                 📈 인기 도서 TOP 5
@@ -113,21 +111,45 @@ function BookList() {
             <Box
                 sx={{
                 display: "flex",
-                gap: "1rem",
+                gap: "1.5rem",
                 overflowX: "auto",
                 padding: "0.5rem 0",
                 }}
             >
                 {topBooks.map((book, index) => (
-                <BookCard
+                <Box
                     key={book.id}
+                    sx={{
+                    position: "relative",
+                    minWidth: "200px", // 카드 크기 확보
+                    }}
+                >
+                    {/* 라벨은 absolute로 겹쳐 띄움 */}
+                    <Box
+                    sx={{
+                        position: "absolute",
+                        top: "-12px", // 겹치지 않도록 위로 띄움
+                        left: 0,
+                        backgroundColor: "#1976d2",
+                        color: "white",
+                        padding: "0.3rem 0.6rem",
+                        fontWeight: "bold",
+                        borderBottomRightRadius: "8px",
+                        fontSize: "0.85rem",
+                        zIndex: 10,
+                    }}
+                    >
+                    TOP {index + 1}
+                    </Box>
+                    {/* BookCard는 라벨을 고려하지 않고 그대로 */}
+                    <BookCard
                     id={book.id}
-                    title={`${index + 1}. ${book.title}`}
-                    author={book.author}
+                    title={book.title}
                     coverUrl={book.coverUrl}
                     date={book.createdAt}
                     views={book.views}
-                />
+                    />
+                </Box>
                 ))}
             </Box>
             <Divider sx={{ mt: 2 }} />
