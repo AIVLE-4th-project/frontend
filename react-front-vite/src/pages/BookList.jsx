@@ -20,19 +20,28 @@ function BookList() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 관련
     const itemsPerPage = 6; // 현재 페이지에 표시되는 카드 수 6개
+    const [topBooks, setTopBooks] = useState([]); // top5 저장장
 
     // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
     useEffect(() => {
         const fetchBooks = async () => {
-        const allBooks = await getBooks();
-        const filteredBooks = allBooks.filter((book) =>
-            book.title.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 최신순 정렬
-        setAllBooks(filteredBooks);
+            const allBooks = await getBooks();
 
-        // 페이지 초기화
-        setCurrentPage(1);
+            // 최신순 정렬
+            const filteredBooks = allBooks.filter((book) =>
+                book.title.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setAllBooks(filteredBooks);
+
+            // 조회수 기준 top 5 정렬
+            const top5 = [...allBooks]
+                .sort((a, b) => b.views - a.views)
+                .slice(0, 5);
+            setTopBooks(top5);
+
+            // 페이지 초기화
+            setCurrentPage(1);
 
         };
 
@@ -79,6 +88,32 @@ function BookList() {
             <Divider sx={{ mt: 2 }} />
             </Box>
 
+            {/* 조회수 Top5 */}
+            <Box sx={{ mt: 4, mb: 4 }}>
+            <Typography variant="h5" fontWeight="bold" gutterBottom>
+                📈 인기 도서 TOP 5
+            </Typography>
+            <Box
+                sx={{
+                display: "flex",
+                gap: "1rem",
+                overflowX: "auto",
+                padding: "0.5rem 0",
+                }}
+            >
+                {topBooks.map((book, index) => (
+                <BookCard
+                    key={book.id}
+                    id={book.id}
+                    title={`${index + 1}. ${book.title}`}
+                    coverUrl={book.coverUrl}
+                    date={book.createdAt}
+                    views={book.views}
+                />
+                ))}
+            </Box>
+            <Divider sx={{ mt: 2 }} />
+            </Box>
 
             {/* 검색창 */}
             <Box style={{ 
