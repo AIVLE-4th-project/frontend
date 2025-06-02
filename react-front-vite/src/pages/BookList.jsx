@@ -21,6 +21,7 @@ function BookList() {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 관련
     const itemsPerPage = 6; // 현재 페이지에 표시되는 카드 수 6개
     const [topBooks, setTopBooks] = useState([]); // top5 저장장
+    const [sortBy, setSortBy] = useState("latest"); // "latest" or "popular"
 
     // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
     useEffect(() => {
@@ -31,7 +32,13 @@ function BookList() {
             const filteredBooks = allBooks.filter((book) =>
                 book.title.toLowerCase().includes(searchTerm.toLowerCase())
             )
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            .sort((a, b) => {
+                    if (sortBy === "latest") {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                    } else if (sortBy === "popular") {
+                    return b.views - a.views;
+                    }
+                });
             setAllBooks(filteredBooks);
 
             // 조회수 기준 top 5 정렬
@@ -46,7 +53,7 @@ function BookList() {
         };
 
         fetchBooks();
-    }, [searchTerm]);
+    }, [searchTerm, sortBy]);
 
     // 현재 페이지 도서 추출
     const pagedBooks = allBooks.slice(
@@ -116,11 +123,22 @@ function BookList() {
             </Box>
 
             {/* 검색창 */}
-            <Box style={{ 
-                display: "flex", 
-                justifyContent: "flex-end", 
-                minWidth: "800px"}}>
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+                <Stack direction="row" spacing={1}>
+                    <Button
+                        variant={sortBy === "latest" ? "contained" : "outlined"}
+                        onClick={() => setSortBy("latest")}
+                    >
+                    최신순
+                    </Button>
+                    <Button
+                        variant={sortBy === "popular" ? "contained" : "outlined"}
+                        onClick={() => setSortBy("popular")}
+                    >
+                    인기순
+                    </Button>
+                </Stack>
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </Box>
 
         {/* 도서 카드 리스트 */}
