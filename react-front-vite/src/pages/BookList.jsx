@@ -114,43 +114,49 @@ function BookList() {
                 gap: "1.5rem",
                 overflowX: "auto",
                 padding: "0.5rem 0",
+                alignItems: "stretch", 
+                whiteSpace: "nowrap",  
                 }}
             >
-                {topBooks.map((book, index) => (
+            {topBooks.map((book, index) => (
+            <Box
+                key={book.id}
+                sx={{
+                position: "relative",
+                minWidth: "220px",
+                marginRight: index === topBooks.length - 1 ? 0 : "1rem",  // 마지막 카드 제외
+                paddingTop: "2.5rem", // ✅ 라벨과 겹치지 않게 여백 추가
+                }}
+            >
+                {/* TOP 라벨 */}
                 <Box
-                    key={book.id}
-                    sx={{
-                    position: "relative",
-                    minWidth: "200px", // 카드 크기 확보
-                    }}
+                sx={{
+                    position: "absolute",
+                    top: 0, // ✅ 겹침 방지를 위해 0으로
+                    left: 0,
+                    backgroundColor: "#1976d2",
+                    color: "white",
+                    padding: "0.3rem 0.6rem",
+                    fontWeight: "bold",
+                    borderBottomRightRadius: "8px",
+                    fontSize: "0.85rem",
+                    zIndex: 10,
+                }}
                 >
-                    {/* 라벨은 absolute로 겹쳐 띄움 */}
-                    <Box
-                    sx={{
-                        position: "absolute",
-                        top: "-12px", // 겹치지 않도록 위로 띄움
-                        left: 0,
-                        backgroundColor: "#1976d2",
-                        color: "white",
-                        padding: "0.3rem 0.6rem",
-                        fontWeight: "bold",
-                        borderBottomRightRadius: "8px",
-                        fontSize: "0.85rem",
-                        zIndex: 10,
-                    }}
-                    >
-                    TOP {index + 1}
-                    </Box>
-                    {/* BookCard는 라벨을 고려하지 않고 그대로 */}
-                    <BookCard
-                    id={book.id}
-                    title={book.title}
-                    coverUrl={book.coverUrl}
-                    date={book.createdAt}
-                    views={book.views}
-                    />
+                TOP {index + 1}
                 </Box>
-                ))}
+
+                {/* BookCard 본문 */}
+                <BookCard
+                id={book.id}
+                title={book.title}
+                author={book.author}
+                coverUrl={book.coverUrl}
+                date={book.createdAt}
+                views={book.views}
+                />
+            </Box>
+            ))}
             </Box>
             <Divider sx={{ mt: 2 }} />
             </Box>
