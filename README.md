@@ -109,6 +109,7 @@ export const deleteBook = async (id) => {
 - BookEdit.jsx : 기존 도서 정보를 수정 또는 삭제할 수 있는 편집 페이지
 - BookList.jsx : 등록된 도서 목록을 확인할 수 있는 메인 화면
 - BookRegister.jsx : 새 도서를 등록하는 입력 페이지
+
 ### 📁 services
 - bookApi.js : 백엔드와 통신하는 axios 통신 api를 모아두는 파일
 
