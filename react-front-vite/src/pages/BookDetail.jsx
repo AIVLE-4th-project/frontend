@@ -36,11 +36,16 @@ function BookDetail() {
 
     return (
     <Box sx={{ padding: "2rem" }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" fontWeight="bold" sx={{ mb: 6 }}>
         📖 도서 상세
       </Typography>
 
-      <Grid container spacing={4} alignItems="flex-start" direction={{ xs: "column", md: "row" }}>
+      <Grid 
+        container 
+        spacing={4} 
+        alignItems="flex-start" 
+        direction={{ xs: "column", md: "row" }}
+      >
         {/* 텍스트 영역 */}
             <Grid item xs={12} md={6}>
                 <Paper elevation={3} sx={{ 
