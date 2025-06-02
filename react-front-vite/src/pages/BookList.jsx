@@ -95,7 +95,7 @@ function BookList() {
                 display: "inline-block",
                 padding: "0.5rem 1.5rem",
                 borderRadius: "1rem",
-                background: "linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)",
+                background: "#42a5f5",
                 color: "white",
                 boxShadow: 3,
                 }}
