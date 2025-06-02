@@ -10,6 +10,8 @@ import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 
 function BookList() {
     const [allBooks, setAllBooks] = useState([]); // 전체 목록 저장
@@ -18,19 +20,28 @@ function BookList() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 관련
     const itemsPerPage = 6; // 현재 페이지에 표시되는 카드 수 6개
+    const [topBooks, setTopBooks] = useState([]); // top5 저장장
 
     // 도서 목록 불러오기 - 최초 1회 (searchTerm 기준)
     useEffect(() => {
         const fetchBooks = async () => {
-        const allBooks = await getBooks();
-        const filteredBooks = allBooks.filter((book) =>
-            book.title.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 최신순 정렬
-        setAllBooks(filteredBooks);
+            const allBooks = await getBooks();
 
-        // 페이지 초기화
-        setCurrentPage(1);
+            // 최신순 정렬
+            const filteredBooks = allBooks.filter((book) =>
+                book.title.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setAllBooks(filteredBooks);
+
+            // 조회수 기준 top 5 정렬
+            const top5 = [...allBooks]
+                .sort((a, b) => b.views - a.views)
+                .slice(0, 5);
+            setTopBooks(top5);
+
+            // 페이지 초기화
+            setCurrentPage(1);
 
         };
 
@@ -47,7 +58,17 @@ function BookList() {
     const totalPages = Math.ceil(allBooks.length / itemsPerPage);
 
     return (
-        <div style={{ padding: "2rem" }}>
+        <Container 
+            maxWidth="lg" 
+            sx={{ 
+                padding: "2rem",
+                minHeight: "700px", 
+                minWidth: "960px",       // 🔥 전체 화면 높이만큼 최소 높이 설정
+                display: "flex",
+                flexDirection: "column",
+                //justifyContent: "space-between" // (선택) 콘텐츠를 위-아래로 균형 있게 배치
+            }}
+            >
             <Box sx={{ textAlign: "center", mt: 4, mb: 4 }}>
             <Typography
                 variant="h4"
@@ -62,20 +83,49 @@ function BookList() {
                 boxShadow: 3,
                 }}
             >
-                작가의 산책
+            작가의 산책
             </Typography>
             <Divider sx={{ mt: 2 }} />
             </Box>
 
+            {/* 조회수 Top5 */}
+            <Box sx={{ mt: 4, mb: 4 }}>
+            <Typography variant="h5" fontWeight="bold" gutterBottom>
+                📈 인기 도서 TOP 5
+            </Typography>
+            <Box
+                sx={{
+                display: "flex",
+                gap: "1rem",
+                overflowX: "auto",
+                padding: "0.5rem 0",
+                }}
+            >
+                {topBooks.map((book, index) => (
+                <BookCard
+                    key={book.id}
+                    id={book.id}
+                    title={`${index + 1}. ${book.title}`}
+                    coverUrl={book.coverUrl}
+                    date={book.createdAt}
+                    views={book.views}
+                />
+                ))}
+            </Box>
+            <Divider sx={{ mt: 2 }} />
+            </Box>
 
             {/* 검색창 */}
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Box style={{ 
+                display: "flex", 
+                justifyContent: "flex-end", 
+                minWidth: "800px"}}>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            </div>
+            </Box>
 
         {/* 도서 카드 리스트 */}
-        <div
-        style={{
+        <Box
+        sx={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "1.5rem",
@@ -92,9 +142,8 @@ function BookList() {
                 views={book.views}
             />
             ))}
-        </div>
-            <div>
-                <Fab
+        </Box>
+            <Fab
                 color="primary"
                 aria-label="add"
                 onClick={() => navigate("/register")}
@@ -104,22 +153,14 @@ function BookList() {
                     right: "2rem",
                     zIndex: 1000,
                 }}
-                >
+            >
                 <AddIcon />
-                </Fab>
-            </div>
+            </Fab>
 
             {/* 페이지네이션 */}
-            <div
-            style={{
-                marginTop: "2rem",
-                display: "flex",
-                gap: "0.5rem",
-                flexWrap: "wrap",
-            }}
-            >
+        <Stack direction="row" spacing={1} sx={{ mt: 4, justifyContent: "center" }}>
             {Array.from({ length: totalPages }, (_, i) => (
-                <button
+                <Button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
                 style={{
@@ -132,11 +173,10 @@ function BookList() {
                 }}
                 >
                 {i + 1}
-                </button>
+                </Button>
             ))}
-            </div>
-
-        </div>
+            </Stack>
+        </Container>
     );
 }
 
