@@ -90,16 +90,6 @@ export const deleteBook = async (id) => {
     return null;
   }
 };
-
-// 표시 이미지 URL 업데이트
-export const updateImageUrl = async (bookId, imageUrl) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/books/${bookId}/image`, { imageUrl });
-    return response.data;
-  } catch (error) {
-    console.error(`이미지 URL 업데이트 실패 (Book ID: ${bookId}):`, error);
-    return null;
-  }
 ```
 - 도서 등록, 목록, 검색, 수정 기능
 - AI 이미지 생성 여부를 체크박스로 설정 가능
