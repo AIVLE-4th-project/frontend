@@ -91,6 +91,17 @@ export const deleteBook = async (id) => {
   }
 };
 ```
+### 📦 Components
+- BookCard.jsx : 각 도서 정보를 카드 형식으로 나타낸 레이아웃
+- Layout.jsx : 반복되는 형태 및 버튼 레이아웃을 구성한 공통 레이아웃
+- SearchBar.jsx : 도서 목록 필터링을 위한 검색 입력창
+
+### 📄 Pages
+- BookDetail.jsx : 선택한 도서의 상세 정보 표시
+- BookEdit.jsx : 기존 도서 정보를 수정 또는 삭제할 수 있는 편집 페이지
+- BookList.jsx : 등록된 도서 목록을 확인할 수 있는 메인 화면
+- BookRegister.jsx : 새 도서를 등록하는 입력 페이지
+
 - 도서 등록, 목록, 검색, 수정 기능
 - AI 이미지 생성 여부를 체크박스로 설정 가능
 - 저자 및 제목 기반 검색 기능 제공
