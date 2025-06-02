@@ -89,6 +89,7 @@ function BookList() {
                 title={book.title}
                 coverUrl={book.coverUrl}
                 date={book.createdAt}
+                views={book.views}
             />
             ))}
         </div>
