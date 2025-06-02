@@ -113,12 +113,6 @@ export const deleteBook = async (id) => {
 ### 📁 services
 - bookApi.js : 백엔드와 통신하는 axios 통신 api를 모아두는 파일
 
-##
-
-- 도서 등록, 목록, 검색, 수정 기능
-- AI 이미지 생성 여부를 체크박스로 설정 가능
-- 저자 및 제목 기반 검색 기능 제공
-- 최신순/인기순 정렬 기능 제공
 
 ## ⚙️ 개발 결정 사항
 
