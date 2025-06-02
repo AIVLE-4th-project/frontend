@@ -41,7 +41,8 @@ function BookEdit() {
       "id": id,
       "title": title,
       "author": author,
-      "content": content
+      "content": content,
+      "generateImage": regenerateCover
     }
     updateBook(book)
     alert("수정 완료!");
