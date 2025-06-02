@@ -15,9 +15,10 @@ function BookEdit() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
 
   const [touched, setTouched] = useState(false);
-    const [loading, setLoading] = useState(true); // ✅ loading 상태 추가
+  const [loading, setLoading] = useState(true); // ✅ loading 상태 추가
 
   useEffect(() => {
     const fetchBookDetail = async () => {
@@ -37,12 +38,17 @@ function BookEdit() {
       "id": id,
       "title": title,
       "author": author,
-      "content": content
+      "content": content,
+      "generateImage": isChecked
     }
     updateBook(book)
     alert("수정 완료!");
     navigate(`/books/${id}`);
   };
+
+  const handleCheck = (event) =>{
+    setIsChecked(event.target.checked);
+  }
 
   if (loading) return <p>🔄 로딩 중...</p>;
   if (!book) return <p>책 정보를 찾을 수 없습니다.</p>;
@@ -86,7 +92,15 @@ function BookEdit() {
             />
 
           <Stack direction="row" spacing={2}>
-            <FormControlLabel control={<Checkbox />} label="표지 재생성" />
+            <FormControlLabel
+              control={
+              <Checkbox
+                checked={isChecked}
+                onChange={handleCheck}
+              />
+              }
+              label="표지 재생성"
+            />
             <Button variant="contained" onClick={handleUpdate}>
               ✅ 수정 완료
             </Button>
