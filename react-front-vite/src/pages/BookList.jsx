@@ -90,7 +90,7 @@ function BookList() {
                 boxShadow: 3,
                 }}
             >
-            작가의 산책
+            ⛰️작가의 산책📖
             </Typography>
             <Divider sx={{ mt: 2 }} />
             </Box>
