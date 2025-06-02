@@ -1,11 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBookDetail, updateBook } from "../services/bookApi";
-import { Box, TextField, Button, Typography, Stack, Paper } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Fab from "@mui/material/Fab";
+import { Checkbox, FormControlLabel, Paper, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+
+import { 
+  FormLayout, 
+  BookFormFields,
+  BackFabButton 
+} from "../components/Layout";
 
 function BookEdit() {
   const { id } = useParams();
@@ -15,7 +18,7 @@ function BookEdit() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
+  const [regenerateCover, setRegenerateCover] = useState(false);
 
   const [touched, setTouched] = useState(false);
   const [loading, setLoading] = useState(true); // ✅ loading 상태 추가
@@ -38,91 +41,56 @@ function BookEdit() {
       "id": id,
       "title": title,
       "author": author,
-      "content": content,
-      "generateImage": isChecked
+      "content": content
     }
     updateBook(book)
     alert("수정 완료!");
     navigate(`/books/${id}`);
   };
 
-  const handleCheck = (event) =>{
-    setIsChecked(event.target.checked);
-  }
-
   if (loading) return <p>🔄 로딩 중...</p>;
   if (!book) return <p>책 정보를 찾을 수 없습니다.</p>;
 
   return (
-     <Box sx={{ padding: "2rem", maxWidth: 500, margin: "auto" }}>
-      <Typography variant="h5" gutterBottom>✏️ 도서 수정</Typography>
-
+    <FormLayout title="도서 수정" icon="✏️">
       <Paper sx={{ padding: 3 }}>
-        <Stack spacing={2}>
-          <TextField
-            label="책 제목"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            error={!title && touched}
-            helperText={!title && touched ? "제목은 필수입니다." : ""}
-          />
-          <TextField
-            label="저자"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
-            error={!author && touched}
-            helperText={!author && touched ? "저자는 필수입니다." : ""}
-          />
-          <TextField
-            label="내용"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-            multiline
-            rows={4}
-            error={!content && touched}
-            helperText={!content && touched ? "내용은 필수입니다." : ""}
-          />
-            <TextField
-            label="등록일"
-            value={book.createdAt?.slice(0, 10)}
-            disabled
-            />
+        <BookFormFields
+          title={title}
+          setTitle={setTitle}
+          author={author}
+          setAuthor={setAuthor}
+          content={content}
+          setContent={setContent}
+          touched={touched}
+          showCreatedAt={true}
+          createdAt={book.createdAt}
+        />
 
-          <Stack direction="row" spacing={2}>
-            <FormControlLabel
-              control={
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"   // ✅ 추가: 버튼 수평 중앙 정렬
+          mt={2}
+        >
+          <FormControlLabel
+            control={
               <Checkbox
-                checked={isChecked}
-                onChange={handleCheck}
+                checked={regenerateCover}
+                onChange={(e) => setRegenerateCover(e.target.checked)}
               />
-              }
-              label="표지 재생성"
-            />
-            <Button variant="contained" onClick={handleUpdate}>
-              ✅ 수정 완료
-            </Button>
-            <Fab
-            color="primary"
-            aria-label="back"
-            onClick={() => navigate(-1)}
-            style={{
-                position: "fixed",
-                bottom: "2rem",
-                right: "2rem",
-                zIndex: 1000,
-            }}
-            >
-            <ArrowBackIcon />
-            </Fab>
-          </Stack>
+            }
+            label="표지 재생성"
+          />
+          <Button variant="contained" onClick={handleUpdate}>
+            ✅ 수정 완료
+          </Button>
         </Stack>
       </Paper>
-    </Box>
+
+      <BackFabButton />
+    </FormLayout>
   );
 }
-
 
 export default BookEdit;

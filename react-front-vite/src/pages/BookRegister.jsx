@@ -4,7 +4,7 @@ import { createBook } from "../services/bookApi";
 import {
   FormLayout,
   BookFormFields,
-  SubmitButton,
+  DefaultButton,
   BackFabButton,
 } from "../components/Layout";
 
@@ -47,7 +47,7 @@ function BookRegister() {
           setContent={setContent}
           touched={touched}
         />
-        <SubmitButton onClick={handleRegister} />
+        <DefaultButton onClick={handleRegister} label="도서 등록" />
       </FormLayout>
       <BackFabButton />
     </div>

@@ -7,9 +7,9 @@ import Fab from "@mui/material/Fab";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 
-export function FormLayout({ title = "도서 등록", icon = "➕", children }) {
+export function FormLayout({ title, icon, children }) {
   return (
-    <Box sx={{ padding: "2rem", maxWidth: 500, margin: "auto" }}>
+    <Box sx={{ padding: "2rem", maxWidth: 1000, width: "100%", margin: "auto" }}>
       <Stack spacing={3} alignItems="center" mb={3}>
         <Typography
           variant="h5"
@@ -39,6 +39,8 @@ export function BookFormFields({
   content,
   setContent,
   touched,
+  createdAt, // 선택적
+  showCreatedAt = false, // 추가 필드 표시 여부
 }) {
   return (
     <Stack spacing={2}>
@@ -66,20 +68,29 @@ export function BookFormFields({
         onChange={(e) => setContent(e.target.value)}
         required
         multiline
-        rows={4}
+        rows={6}
         error={!content && touched}
         helperText={!content && touched ? "내용은 필수 입력 항목입니다." : ""}
         fullWidth
       />
+
+      {showCreatedAt && (
+        <TextField
+            label="등록일"
+            value={(createdAt ?? "").slice(0, 10)}
+            disabled
+            fullWidth
+        />
+        )}
     </Stack>
   );
 }
 
-export function SubmitButton({ onClick }) {
+export function DefaultButton({ onClick, label}) {
   return (
     <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
       <Button variant="contained" color="primary" onClick={onClick}>
-        도서 등록
+        {label}
       </Button>
     </Stack>
   );
