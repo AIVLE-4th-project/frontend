@@ -13,6 +13,7 @@ function BookDetail() {
     const [loading, setLoading] = useState(true); // ✅ loading 상태 추가
 
     useEffect(() => {
+        console.log("조회 함수 실행"); 
         const fetchBookDetail = async () => {
             setLoading(true);  // 로딩 시작
             const data = await getBookDetail(id);
