@@ -31,8 +31,9 @@
 ### 🔗 API
 - RESTful API
 - OpenAI API (DALLE)
-- 
+  
 ## 🧩 주요 기능
+### 📚 API 목록
 ```js
 // 도서 등록
 export const createBook = async (book) => {
@@ -91,6 +92,13 @@ export const deleteBook = async (id) => {
   }
 };
 ```
+### 기능
+- 도서 등록, 목록, 검색, 수정 기능
+- AI 이미지 생성 여부를 체크박스로 설정 가능
+- 저자 및 제목 기반 검색 기능 제공
+- 최신순/인기순 정렬 기능 제공
+  
+## 주요 폴더
 ### 📦 Components
 - BookCard.jsx : 각 도서 정보를 카드 형식으로 나타낸 레이아웃
 - Layout.jsx : 반복되는 형태 및 버튼 레이아웃을 구성한 공통 레이아웃
@@ -101,11 +109,8 @@ export const deleteBook = async (id) => {
 - BookEdit.jsx : 기존 도서 정보를 수정 또는 삭제할 수 있는 편집 페이지
 - BookList.jsx : 등록된 도서 목록을 확인할 수 있는 메인 화면
 - BookRegister.jsx : 새 도서를 등록하는 입력 페이지
-
-- 도서 등록, 목록, 검색, 수정 기능
-- AI 이미지 생성 여부를 체크박스로 설정 가능
-- 저자 및 제목 기반 검색 기능 제공
-- 최신순/인기순 정렬 기능 제공
+### 📁 services
+- bookApi.js : 백엔드와 통신하는 axios 통신 api를 모아두는 파일
 
 ## ⚙️ 개발 결정 사항
 
