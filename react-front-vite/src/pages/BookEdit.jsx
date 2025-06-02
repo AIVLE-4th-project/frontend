@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { getBookDetail, updateBook } from "../services/bookApi";
 import { Box, TextField, Button, Typography, Stack, Paper } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Fab from "@mui/material/Fab";
 
 function BookEdit() {
@@ -84,6 +86,7 @@ function BookEdit() {
             />
 
           <Stack direction="row" spacing={2}>
+            <FormControlLabel control={<Checkbox />} label="표지 재생성" />
             <Button variant="contained" onClick={handleUpdate}>
               ✅ 수정 완료
             </Button>
