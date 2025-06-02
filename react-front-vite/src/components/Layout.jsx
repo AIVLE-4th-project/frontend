@@ -39,7 +39,7 @@ export function BookFormFields({
   content,
   setContent,
   touched,
-  createdAt, // 선택적
+  createdAt,
   showCreatedAt = false, // 추가 필드 표시 여부
 }) {
   return (
@@ -103,7 +103,7 @@ export function BackFabButton() {
     <Fab
       color="primary"
       aria-label="back"
-      onClick={() => navigate("/")}
+      onClick={() => navigate(-1)}
       style={{
         position: "fixed",
         bottom: "2rem",

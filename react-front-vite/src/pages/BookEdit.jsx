@@ -71,7 +71,7 @@ function BookEdit() {
           direction="row"
           spacing={2}
           alignItems="center"
-          justifyContent="center"   // ✅ 추가: 버튼 수평 중앙 정렬
+          justifyContent="center"
           mt={2}
         >
           <FormControlLabel
